@@ -3,6 +3,8 @@ build/
 *.nims
 
 *.qml_android/
+*.directory
+*.knownPackages
 
 *
 !/**/

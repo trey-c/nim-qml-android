@@ -1,4 +1,4 @@
-# Practical RPC - Rpc framework
+# Nim Qml Android - Build an Android apk using nim
 # GNU Lesser General Public License, version 2.1
 #
 # Copyright © 2020 Trey Cutter <treycutter@protonmail.com>
