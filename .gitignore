@@ -1,0 +1,10 @@
+build/
+.vscode/
+*.nims
+
+*.qml_android/
+
+*
+!/**/
+!LICENSE
+!*.*
