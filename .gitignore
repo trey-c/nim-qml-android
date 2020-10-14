@@ -1,11 +1,10 @@
 build/
 .vscode/
 *.nims
-
-*.qml_android/
+.qml_android/
 *.directory
 *.knownPackages
-
+example/.qml_android/*
 *
 !/**/
 !LICENSE
