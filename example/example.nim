@@ -1,22 +1,31 @@
 import asyncdispatch, os
-import NimQml
-# env JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 5.13.0/android_arm64_v8a/bin/androiddeployqt --output /home/trey/Downloads --input ./deployment_settings.json --android-platform android-29 --jdk /usr/lib/jvm/java-8-openjdk-amd64 --gradle --info
+
+import qt/gui/qguiapplication
+import qt/qml/qqmlapplicationengine
+import qt/quickcontrols2/qquickstyle
+import qt/core/qobject
 
 proc main() =
-  #var app = newQApplication()
-  #defer: app.delete()
+  var app = QGuiApplicaton()
+  app.init()
+  defer: app.delete_later()
 
-  #var engine = newQQmlApplicationEngine()
-  #defer: engine.delete()
+  QResource.register_resource("example.rcc")
 
-  #set_style("Material")
-  #engine.load("qrc:/example.qml")
+  var engine = QQmlApplicationEngine()
+  engine.init()
+  engine.load("example.qml")
+  defer: engine.delete_later() 
+
+  var style = QQuickStyle()
+  style.init()
+  style.set_style("Material")
 
   while true:
-    #app.process_events(0)
-    #try:
-      #poll(100)
-    #except:
+    app.process_events()
+    try:
+      poll(100)
+    except:
       continue
 
 when isMainModule:

@@ -1,3 +1,8 @@
-## nim-qml-android
+## nim-qt-android
+> Soon
 
-SOON
+Deps:
+ - python3
+ - aqt
+ - nim-qt
+
