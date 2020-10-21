@@ -14,7 +14,7 @@ proc main() =
 
   var engine = QQmlApplicationEngine()
   engine.init()
-  engine.load("example.qml")
+  engine.load("qml/example.qml")
   defer: engine.delete_later() 
 
   var style = QQuickStyle()

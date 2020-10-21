@@ -1,0 +1,15 @@
+{
+  "qt": "/home/qt/work/install",
+  "sdk": "home/androidsdk/cmdline-tools",
+  "sdkBuildToolsRevision": "29.0.2",
+  "ndk": "/home/androidsdk/cmdline-tools/ndk-bundle",
+  "toolchain-prefix": "llvm",
+  "tool-prefix": "llvm",
+  "toolchain-version": "4.9",
+  "ndk-host": "linux-x86_64",
+  "target-architecture": "arm64-v8a",
+  "qml-root-path": "/home/trey/Code/Projects/nim-qt-android/example",
+  "stdcpp-path": "/home/androidsdk/cmdline-tools/ndk-bundle/sources/cxx-stl/llvm-libc++/libs/arm64-v8a/libc++_shared.so",
+  "useLLVM": true,
+  "application-binary": "/home/trey/Code/Projects/nim-qt-android/example/.qt_android/output/libs/arm64-v8a/libexample.so"
+}

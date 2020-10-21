@@ -17,7 +17,7 @@ task dev, "Build's qt_android":
       exec("nim c --nimcache:/tmp/nimcache/ qt_android/qt_android.nim")
 
 task example, "Builds the example":
-      exec("nim c -c --cpu:arm --os:android -d:androidNDK --noMain:on --nimcache:/tmp/nimcache/ example/example.nim --out:example")
+      exec("nim cpp -c --cpu:arm --os:android -d:androidNDK --noMain:on --nimcache:/tmp/nimcache/ example/example.nim --out:example")
 
 before example:
   exec ("rcc-qt5 --binary example/example.qrc -o example/main.rcc")

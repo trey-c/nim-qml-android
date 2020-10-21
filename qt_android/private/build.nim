@@ -3,34 +3,27 @@
 #
 # Copyright © 2020 Trey Cutter <treycutter@protonmail.com>
 
-import system, osproc
+import system, osproc, os
 
-proc build_nim_project*(dir: string) =
+proc build_nim_project*(dir: string): bool =
+  set_current_dir(dir)
   discard exec_cmd("rm -rf " & dir & "output")
   discard exec_cmd("mkdir " & dir & "output")
-  discard exec_cmd("nim compileToCpp -c --cc:clang --cpu:arm64 --os:android -d:androidNDK --nimcache:" &
-  dir & "output/nimcache" & " example.nim")
+  
+  var output = "-o:" & dir & "output/libs/arm64-v8a/libexample.so "
+  if exec_cmd("nim cpp --cc:clang --cpu:arm64 --os:android " & output & "-d:androidNDK ../example.nim") == 1:
+    return true
+  discard exec_cmd("rcc-qt5 " & dir & "../example.qrc -o output/libs/arm64-v8a/example.rcc")
 
-proc build_cpp_sources*(dir: string) =
-  var
-    clang = dir & "cmdline-tools/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android29-clang++ "
-    sources = dir & "output/nimcache/*cpp "
-    link = "-I/home/trey/.choosenim/toolchains/nim-1.2.6/lib "
-    output_libs = dir & "output/libs/arm64-v8a/"
-    output = "-o " & output_libs & "libexample.so "
-    flags = "-std=gnu++14 -funsigned-char -lm -ldl " & output & link
-  discard exec_cmd("mkdir -p " & output_libs)
-  discard exec_cmd(clang & sources & flags)
-
-proc build_apk*(dir: string) =
-  discard exec_cmd("cp ../prebuilt/libDOtherSide.so " & dir & "output/libs/arm64-v8a/libDOtherSide.so")
-
+proc build_apk*(dir: string): bool =
+  set_current_dir(dir)
   var
     java_home = "env JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 "
-    androiddeployqt = dir & "5.13.0/android_arm64_v8a/bin/androiddeployqt "
+    androiddeployqt = "/home/qt/work/install/bin/androiddeployqt "
     flags = "--output " & dir & "output/" & " --input " & dir & "deployment_settings.json " & "--android-platform " &
             "android-29 " & "--jdk " &
         "/usr/lib/jvm/java-8-openjdk-amd64 --gradle"
-  discard exec_cmd(java_home & androiddeployqt & flags)
+  if exec_cmd(java_home & androiddeployqt & flags) == 1:
+    return true
 
 

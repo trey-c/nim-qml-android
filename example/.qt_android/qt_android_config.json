@@ -1,0 +1,6 @@
+{
+  "sdk": "android_29",
+  "host": "linux-x86_64",
+  "target-architecture": "arm64-v8a",
+  "application-binary": "/home/trey/Code/Projects/nim-qt-android/example/.qt_android/libs/whatever.so"
+}

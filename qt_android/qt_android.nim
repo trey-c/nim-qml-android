@@ -21,8 +21,8 @@ proc generate_config(dir: string) =
 
 proc clean(dir: string) =
   discard exec_cmd("rm -rf " & dir & "deployment_settings.json")
-  discard exec_cmd("rm -rf " & dir & "5.13.0")
-  discard exec_cmd("rm -rf " & dir & "cmdline-tools")
+  discard exec_cmd("rm -rf /home/qt")
+  discard exec_cmd("rm -rf /home/androidsdk")
 
 proc main() =
   var base_dir = getCurrentDir() & "/.qt_android/"
@@ -34,12 +34,14 @@ proc main() =
     of "clean":
       clean(base_dir)
     of "setup":
-      if (dir_exists(base_dir) == false):
+      if dir_exists(base_dir) == false:
         echo "Please run 'qml_android init' first"
         return
 
-      setup_sdk_tools(base_dir)
-      setup_qt_android(base_dir)
+      if setup_qt_dir():
+        echo "\nSETUP QT DIR FAILED. SKIPPING\n"
+      if setup_sdk_tools():
+        echo "\nSETUP ANDROIDSDK DIR FAILED. SKIPPING\n"
       setup_deployment_settings(base_dir)
     of "refresh":
       echo "only refresh whats needed"
@@ -47,9 +49,13 @@ proc main() =
     of "check":
       echo "TODO"
     of "build":
-      build_nim_project(base_dir)
-      build_cpp_sources(base_dir)
-      build_apk(base_dir)
+      if build_nim_project(base_dir):
+        echo "\nBUILDING NIM PROJECT FAILED. SUICIDED!\n"
+        return
+      echo "BUILT NIM.. NOW TRYING APK"
+      if build_apk(base_dir):
+        echo "\nBUILDING APK FAILED. SUICIDED!\n"
+        return
     of "deploy":
       echo "TODO"
     else:
