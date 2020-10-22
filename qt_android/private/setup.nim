@@ -36,7 +36,7 @@ proc setup_deployment_settings*(dir: string) =
   var deployment_settings = new_j_object()
 
   deployment_settings.add("qt", new_j_string("/home/qt/work/install"))
-  deployment_settings.add("sdk", new_j_string("home/androidsdk/cmdline-tools"))
+  deployment_settings.add("sdk", new_j_string("/home/androidsdk/cmdline-tools"))
   deployment_settings.add("sdkBuildToolsRevision", new_j_string("29.0.2"))
   deployment_settings.add("ndk", new_j_string("/home/androidsdk/cmdline-tools/ndk-bundle"))
   deployment_settings.add("toolchain-prefix", new_j_string("llvm"))
@@ -52,5 +52,3 @@ proc setup_deployment_settings*(dir: string) =
 
   write_file(dir & "deployment_settings.json",
       deployment_settings.pretty())
-
-
